@@ -1,5 +1,6 @@
 "use client"
 
+import Image from "next/image"
 import { useState, useEffect, useMemo } from "react"
 import { motion, AnimatePresence } from "framer-motion"
 
@@ -7,7 +8,6 @@ export function IntroAnimation({ onComplete }: { onComplete: () => void }) {
   const [phase, setPhase] = useState(0)
   const [isMounted, setIsMounted] = useState(false)
 
-  // Breathing air particles - gentle, organic movement
   const airParticles = useMemo(() => {
     if (!isMounted) return []
     return Array.from({ length: 40 }, (_, i) => ({
@@ -59,7 +59,8 @@ export function IntroAnimation({ onComplete }: { onComplete: () => void }) {
             <motion.div
               className="absolute inset-0"
               style={{
-                background: "radial-gradient(ellipse at center, rgba(34, 211, 238, 0.03) 0%, transparent 70%)",
+                background:
+                  "radial-gradient(ellipse at center, rgba(34, 211, 238, 0.03) 0%, transparent 70%)",
               }}
               animate={{
                 scale: [1, 1.2, 1],
@@ -73,7 +74,7 @@ export function IntroAnimation({ onComplete }: { onComplete: () => void }) {
             />
           </motion.div>
 
-          {/* Floating air particles - gentle upward drift like clean air */}
+          {/* Floating air particles */}
           <div className="absolute inset-0 overflow-hidden">
             {airParticles.map((particle) => (
               <motion.div
@@ -86,33 +87,49 @@ export function IntroAnimation({ onComplete }: { onComplete: () => void }) {
                   opacity: particle.opacity,
                 }}
                 initial={{ y: "120vh", x: 0 }}
-                animate={phase >= 1 ? {
-                  y: "-20vh",
-                  x: [0, 15, -10, 5, 0],
-                } : {}}
+                animate={
+                  phase >= 1
+                    ? {
+                        y: "-20vh",
+                        x: [0, 15, -10, 5, 0],
+                      }
+                    : {}
+                }
                 transition={{
-                  y: { duration: particle.duration, delay: particle.delay, ease: "linear" },
-                  x: { duration: particle.duration / 2, delay: particle.delay, repeat: 2, ease: "easeInOut" },
+                  y: {
+                    duration: particle.duration,
+                    delay: particle.delay,
+                    ease: "linear",
+                  },
+                  x: {
+                    duration: particle.duration / 2,
+                    delay: particle.delay,
+                    repeat: 2,
+                    ease: "easeInOut",
+                  },
                 }}
               />
             ))}
           </div>
 
-          {/* Central breathing orb - expands and contracts like breathing */}
+          {/* Central breathing orb */}
           <motion.div
             className="absolute"
             initial={{ opacity: 0 }}
             animate={phase >= 1 ? { opacity: 1 } : {}}
             transition={{ duration: 1 }}
           >
-            {/* Outer breathing ring */}
             <motion.div
               className="w-[500px] h-[500px] rounded-full border border-primary/10"
               initial={{ scale: 0.8, opacity: 0 }}
-              animate={phase >= 1 ? {
-                scale: [1, 1.15, 1],
-                opacity: [0.3, 0.6, 0.3],
-              } : {}}
+              animate={
+                phase >= 1
+                  ? {
+                      scale: [1, 1.15, 1],
+                      opacity: [0.3, 0.6, 0.3],
+                    }
+                  : {}
+              }
               transition={{
                 duration: 4,
                 repeat: Infinity,
@@ -120,14 +137,17 @@ export function IntroAnimation({ onComplete }: { onComplete: () => void }) {
               }}
             />
 
-            {/* Middle breathing ring */}
             <motion.div
               className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[350px] h-[350px] rounded-full border border-primary/20"
               initial={{ scale: 0.8, opacity: 0 }}
-              animate={phase >= 1 ? {
-                scale: [1, 1.1, 1],
-                opacity: [0.4, 0.7, 0.4],
-              } : {}}
+              animate={
+                phase >= 1
+                  ? {
+                      scale: [1, 1.1, 1],
+                      opacity: [0.4, 0.7, 0.4],
+                    }
+                  : {}
+              }
               transition={{
                 duration: 4,
                 delay: 0.5,
@@ -136,17 +156,21 @@ export function IntroAnimation({ onComplete }: { onComplete: () => void }) {
               }}
             />
 
-            {/* Inner breathing glow */}
             <motion.div
               className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[200px] h-[200px] rounded-full"
               style={{
-                background: "radial-gradient(circle, rgba(34, 211, 238, 0.15) 0%, transparent 70%)",
+                background:
+                  "radial-gradient(circle, rgba(34, 211, 238, 0.15) 0%, transparent 70%)",
               }}
               initial={{ scale: 0.5, opacity: 0 }}
-              animate={phase >= 1 ? {
-                scale: [1, 1.3, 1],
-                opacity: [0.5, 1, 0.5],
-              } : {}}
+              animate={
+                phase >= 1
+                  ? {
+                      scale: [1, 1.3, 1],
+                      opacity: [0.5, 1, 0.5],
+                    }
+                  : {}
+              }
               transition={{
                 duration: 4,
                 delay: 0.2,
@@ -155,28 +179,31 @@ export function IntroAnimation({ onComplete }: { onComplete: () => void }) {
               }}
             />
 
-            {/* Center pulse point */}
             <motion.div
               className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-4 h-4 rounded-full bg-primary"
               initial={{ scale: 0, opacity: 0 }}
-              animate={phase >= 1 ? {
-                scale: [1, 1.5, 1],
-                opacity: 1,
-                boxShadow: [
-                  "0 0 20px rgba(34, 211, 238, 0.4)",
-                  "0 0 60px rgba(34, 211, 238, 0.8)",
-                  "0 0 20px rgba(34, 211, 238, 0.4)"
-                ]
-              } : {}}
+              animate={
+                phase >= 1
+                  ? {
+                      scale: [1, 1.5, 1],
+                      opacity: 1,
+                      boxShadow: [
+                        "0 0 20px rgba(34, 211, 238, 0.4)",
+                        "0 0 60px rgba(34, 211, 238, 0.8)",
+                        "0 0 20px rgba(34, 211, 238, 0.4)",
+                      ],
+                    }
+                  : {}
+              }
               transition={{
                 scale: { duration: 4, repeat: Infinity, ease: "easeInOut" },
                 boxShadow: { duration: 4, repeat: Infinity, ease: "easeInOut" },
-                opacity: { duration: 0.5 }
+                opacity: { duration: 0.5 },
               }}
             />
           </motion.div>
 
-          {/* Product silhouette preview - appears mid-way */}
+          {/* Real purifier preview */}
           <motion.div
             className="absolute"
             initial={{ opacity: 0, scale: 0.9, y: 20 }}
@@ -184,55 +211,33 @@ export function IntroAnimation({ onComplete }: { onComplete: () => void }) {
             exit={{ opacity: 0, scale: 1.1, y: -20 }}
             transition={{ duration: 1, ease: [0.4, 0, 0.2, 1] }}
           >
-            {/* Device silhouette */}
-            <div className="relative">
+            <div className="relative w-36 h-64 md:w-44 md:h-80">
+              <div className="absolute inset-0 rounded-[40px] bg-primary/10 blur-[40px]" />
+
               <motion.div
-                className="w-32 h-56 rounded-[40px] bg-gradient-to-b from-secondary/80 to-card/80 border border-border/30 backdrop-blur-sm"
-                animate={phase >= 3 ? {
-                  boxShadow: [
-                    "0 0 30px rgba(34, 211, 238, 0.1)",
-                    "0 0 60px rgba(34, 211, 238, 0.2)",
-                    "0 0 30px rgba(34, 211, 238, 0.1)"
-                  ]
-                } : {}}
+                className="relative w-full h-full rounded-[32px] border border-border/30 bg-card/20 backdrop-blur-sm overflow-hidden shadow-[0_0_40px_rgba(34,211,238,0.12)]"
+                animate={
+                  phase >= 3
+                    ? {
+                        boxShadow: [
+                          "0 0 30px rgba(34, 211, 238, 0.1)",
+                          "0 0 60px rgba(34, 211, 238, 0.2)",
+                          "0 0 30px rgba(34, 211, 238, 0.1)",
+                        ],
+                      }
+                    : {}
+                }
                 transition={{ duration: 3, repeat: Infinity, ease: "easeInOut" }}
               >
-                {/* Inner glow circle */}
-                <motion.div
-                  className="absolute top-8 left-1/2 -translate-x-1/2 w-16 h-16 rounded-full border border-primary/20"
-                  animate={{ opacity: [0.3, 0.6, 0.3] }}
-                  transition={{ duration: 2, repeat: Infinity }}
-                />
-                <motion.div
-                  className="absolute top-10 left-1/2 -translate-x-1/2 w-12 h-12 rounded-full bg-primary/10"
-                  animate={{ scale: [1, 1.1, 1], opacity: [0.5, 0.8, 0.5] }}
-                  transition={{ duration: 2, repeat: Infinity }}
-                />
-                <div className="absolute top-[52px] left-1/2 -translate-x-1/2 w-4 h-4 rounded-full bg-primary/50" />
-
-                {/* Vent lines */}
-                <div className="absolute bottom-16 left-1/2 -translate-x-1/2 w-16 space-y-1.5">
-                  {[0, 1, 2].map((i) => (
-                    <motion.div
-                      key={i}
-                      className="h-px bg-border/40"
-                      initial={{ scaleX: 0 }}
-                      animate={phase >= 3 ? { scaleX: 1 } : {}}
-                      transition={{ delay: 0.8 + i * 0.1, duration: 0.5 }}
-                    />
-                  ))}
-                </div>
-
-                {/* Status bar */}
-                <motion.div
-                  className="absolute bottom-6 left-1/2 -translate-x-1/2 w-8 h-0.5 rounded-full bg-primary/60"
-                  initial={{ scaleX: 0 }}
-                  animate={phase >= 3 ? { scaleX: 1 } : {}}
-                  transition={{ delay: 1.2, duration: 0.5 }}
+                <Image
+                  src="/airpurifier-hero.png"
+                  alt="CRANA Air Purifier"
+                  fill
+                  priority
+                  className="object-contain p-2"
                 />
               </motion.div>
 
-              {/* Floating particles around device */}
               <motion.div
                 className="absolute -top-6 -left-6 w-2 h-2 rounded-full bg-primary/40"
                 animate={{ y: [-5, 5, -5], x: [-3, 3, -3] }}
@@ -241,14 +246,18 @@ export function IntroAnimation({ onComplete }: { onComplete: () => void }) {
               <motion.div
                 className="absolute top-1/3 -right-8 w-1.5 h-1.5 rounded-full bg-primary/30"
                 animate={{ y: [5, -5, 5], x: [3, -3, 3] }}
-                transition={{ duration: 4, repeat: Infinity, ease: "easeInOut", delay: 1 }}
+                transition={{
+                  duration: 4,
+                  repeat: Infinity,
+                  ease: "easeInOut",
+                  delay: 1,
+                }}
               />
             </div>
           </motion.div>
 
-          {/* Text content - overlays the product */}
+          {/* Text content */}
           <div className="absolute flex flex-col items-center z-20">
-            {/* "Breathe" text - appears first */}
             <motion.div
               className="overflow-hidden"
               initial={{ opacity: 0 }}
@@ -265,7 +274,6 @@ export function IntroAnimation({ onComplete }: { onComplete: () => void }) {
               </motion.p>
             </motion.div>
 
-            {/* Brand name reveal */}
             <motion.div
               className="overflow-hidden mt-4"
               initial={{ opacity: 0 }}
@@ -282,7 +290,6 @@ export function IntroAnimation({ onComplete }: { onComplete: () => void }) {
               </motion.h1>
             </motion.div>
 
-            {/* Gradient line separator */}
             <motion.div
               className="mt-6 h-px bg-gradient-to-r from-transparent via-primary to-transparent"
               initial={{ width: 0, opacity: 0 }}
@@ -290,7 +297,6 @@ export function IntroAnimation({ onComplete }: { onComplete: () => void }) {
               transition={{ duration: 0.8, delay: 0.3, ease: [0.4, 0, 0.2, 1] }}
             />
 
-            {/* Launching Soon tag */}
             <motion.div
               className="mt-8 overflow-hidden"
               initial={{ opacity: 0 }}
@@ -314,7 +320,6 @@ export function IntroAnimation({ onComplete }: { onComplete: () => void }) {
               </motion.div>
             </motion.div>
 
-            {/* Tagline */}
             <motion.p
               className="mt-6 text-sm md:text-base tracking-[0.2em] uppercase text-muted-foreground/60"
               initial={{ opacity: 0, y: 10 }}
@@ -345,10 +350,11 @@ export function IntroAnimation({ onComplete }: { onComplete: () => void }) {
           ))}
 
           {/* Subtle vignette */}
-          <div 
+          <div
             className="absolute inset-0 pointer-events-none"
             style={{
-              background: "radial-gradient(ellipse at center, transparent 40%, rgba(0,0,0,0.4) 100%)",
+              background:
+                "radial-gradient(ellipse at center, transparent 40%, rgba(0,0,0,0.4) 100%)",
             }}
           />
         </motion.div>
